@@ -1,3 +1,5 @@
+sudo apt install git fakeroot build-essential tar libncurses-dev xz-utils libssl-dev bc stress python3-distutils libelf-dev linux-headers-$(uname -r) bison flex libncurses5-dev util-linux net-tools linux-tools-$(uname -r) exuberant-ctags cscope sysfsutils gnome-system-monitor curl perf-tools-unstable gnuplot rt-tests indent tree smem libnuma-dev numactl hwloc bpfcc-tools sparse flawfinder cppcheck tuna trace-cmd virt-what
+
 Estamos creando un Clasificador de Residuos Automático usando los tachos de UTEC. El hardware disponible es un ESP32-S3 WROOM N16R8 con WiFi+Bluetooth y una cámara OV5640.
 El objetivo es que el ESP32-S3 pueda tomar fotos y clasificar residuos en 3 tipos: Plástico, Papel, General (todo lo que no sea plástico o papel), usando un modelo de Machine Learning que se pueda ejecutar en el módulo local.
 
