@@ -22,4 +22,9 @@ Indicar cómo verificar el resultado de cada paso.
 
 Sugerir librerías y herramientas específicas para ESP32-S3 y OV5640.
 
+paso 2:
 asmlinkage long sys_xorbuf(unsigned char __user *buf, size_t len, unsigned char key);
+
+paso 3:
+nano arch/x86/entry/syscalls/syscall_64.tbl
+grep xorbuf arch/x86/entry/syscalls/syscall_64.tbl
