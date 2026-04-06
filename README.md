@@ -21,3 +21,5 @@ Priorizar simulación o prueba local antes de integrar al tacho.
 Indicar cómo verificar el resultado de cada paso.
 
 Sugerir librerías y herramientas específicas para ESP32-S3 y OV5640.
+
+asmlinkage long sys_xorbuf(unsigned char __user *buf, size_t len, unsigned char key);
