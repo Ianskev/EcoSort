@@ -1,0 +1,51 @@
+cat > ~/syscall_xorbuf.patch << 'EOF'
+--- /dev/null
++++ b/kernel/xorbuf.c
+@@ -0,0 +1,34 @@
++#include <linux/kernel.h>
++#include <linux/syscalls.h>
++#include <linux/uaccess.h>
++
++SYSCALL_DEFINE3(xorbuf, unsigned char __user *, buf, size_t, len, unsigned char, key)
++{
++    unsigned char *kbuf;
++    size_t i;
++
++    if (len == 0 || len > PAGE_SIZE)
++        return -EINVAL;
++    if (!buf)
++        return -EINVAL;
++
++    kbuf = kmalloc(len, GFP_KERNEL);
++    if (!kbuf)
++        return -ENOMEM;
++
++    if (copy_from_user(kbuf, buf, len)) {
++        kfree(kbuf);
++        return -EFAULT;
++    }
++
++    for (i = 0; i < len; i++)
++        kbuf[i] ^= key;
++
++    if (copy_to_user(buf, kbuf, len)) {
++        kfree(kbuf);
++        return -EFAULT;
++    }
++
++    kfree(kbuf);
++    return len;
++}
+--- a/arch/x86/entry/syscalls/syscall_64.tbl
++++ b/arch/x86/entry/syscalls/syscall_64.tbl
+@@ -xxx +548 @@
++548	common	xorbuf	sys_xorbuf
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -xxx +1395 @@
++asmlinkage long sys_xorbuf(unsigned char __user *buf, size_t len, unsigned char key);
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -xxx @@
++obj-y += xorbuf.o
+EOF
