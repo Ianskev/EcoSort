@@ -28,10 +28,17 @@ asmlinkage long sys_xorbuf(unsigned char __user *buf, size_t len, unsigned char 
 paso 3:
 nano arch/x86/entry/syscalls/syscall_64.tbl
 
-grep xorbuf arch/x86/entry/syscalls/syscall_64.tbl
-
 paso 4:
 
 echo 'obj-y += xorbuf.o' >> kernel/Makefile
 
 grep xorbuf kernel/Makefile
+
+paso final:
+
+cd ~/kernel/linux-6.1.130
+
+diff -u /dev/null kernel/xorbuf.c > ~/syscall_xorbuf.patch
+
+diff -u arch/x86/entry/syscalls/syscall_64.tbl.orig arch/x86/entry/syscalls/syscall_64.tbl >> ~/syscall_xorbuf.patch 2>/dev/null
+grep xorbuf arch/x86/entry/syscalls/syscall_64.tbl
